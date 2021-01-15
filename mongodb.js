@@ -124,7 +124,15 @@ MongoClient.connect(connectionURL, {
     //     console.log(user)
     // })
 
-    db.collection('users').find({ age: 19 }).count((error, count) => {
-        console.log(count)
+    // db.collection('users').find({ age: 19 }).count((error, count) => {
+    //     console.log(count)
+    // })
+
+    // db.collection('tasks').findOne({ _id: ObjectID("6000e1a6d5a43912295914dd") }, (error, task) => {
+    //     console.log(task);
+    // })
+
+    db.collection('tasks').find({ completed: true }).toArray((error, task) => {
+        console.log(task);
     })
 })
