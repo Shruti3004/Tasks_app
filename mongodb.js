@@ -167,13 +167,32 @@ MongoClient.connect(connectionURL, {
     //     console.log(error);
     // })
 
-    db.collection('tasks').updateMany({ completed: true} ,{
-        $set: {
-            completed: false
-        }
-    }).then(result => {
+    // db.collection('tasks').updateMany({ completed: true} ,{
+    //     $set: {
+    //         completed: false
+    //     }
+    // }).then(result => {
+    //     console.log(result);
+    // }).catch(error => {
+    //     console.log(error);
+    // })
+
+
+    // ************************ DELETE ONE ************************
+    // ************************ DELETE MANY ************************
+    // db.collection('users').deleteMany({age: 27})
+    // .then(result => {
+    //     console.log(result);
+    // })
+    // .catch(error => {
+    //     console.log(error);
+    // })
+
+    db.collection('tasks').deleteOne({description: 'ABC'})
+    .then(result => {
         console.log(result);
-    }).catch(error => {
+    })
+    .catch(error => {
         console.log(error);
     })
 })
