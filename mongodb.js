@@ -132,7 +132,48 @@ MongoClient.connect(connectionURL, {
     //     console.log(task);
     // })
 
-    db.collection('tasks').find({ completed: true }).toArray((error, task) => {
-        console.log(task);
+    // db.collection('tasks').find({ completed: true }).toArray((error, task) => {
+    //     console.log(task);
+    // })
+
+
+    // ************************ UPDATE ONE ************************
+    // ************************ UPDATE MANY ************************
+    // const updatePromise = db.collection('users').updateOne({_id: ObjectID("6000de916424aa10f57d351c")}, {
+    //     $set: {
+    //         name: 'Mike'
+    //     }
+    // })
+    
+    // updatePromise
+    // .then(result => {
+    //     console.log(result);
+    // })
+    // .catch(error => {
+    //     console.log(error);
+    // })
+
+    // db.collection('users').updateOne({_id: ObjectID("6000de916424aa10f57d351c")}, {
+    //     // $set: {
+    //     //     name: 'Mike'
+    //     // }
+    //     $inc: {
+    //         age: 1 
+    //     }
+    // }).then(result => {
+    //     console.log(result);
+    // })
+    // .catch(error => {
+    //     console.log(error);
+    // })
+
+    db.collection('tasks').updateMany({ completed: true} ,{
+        $set: {
+            completed: false
+        }
+    }).then(result => {
+        console.log(result);
+    }).catch(error => {
+        console.log(error);
     })
 })
