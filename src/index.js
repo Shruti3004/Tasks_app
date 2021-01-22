@@ -54,6 +54,26 @@ app.post("/tasks", (req,res) => {
     })
 })
 
+app.get("/tasks", (req, res) => {
+    Tasks.find({}).then(task => {
+        res.send(task);
+    }).catch(error => {
+        res.send(error);
+    })
+})
+
+app.get("/tasks/:desc", (req,res) => {
+    const desc = req.params.desc;
+    Tasks.find({description: desc}).then(task => {
+        if(!task){
+            return res.status(400).send("task NOt Found!")
+        }
+        res.send(task);
+    }).catch(error => {
+        console.log(error);
+    })
+})
+
 app.listen(port, ()=> {
     console.log(`Server is up on port ${port}`)
 })
