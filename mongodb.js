@@ -92,7 +92,7 @@ MongoClient.connect(connectionURL, {
     //     console.log(user);
     // })
 
-    // // if we find multiple document with same findinf condition it will gona display the first one
+    // // if we find multiple document with same find condition it will gona display the first one
     // // It will return null
     // db.collection('users').findOne({ name: 'Jen', age: 1}, (error, user) => {
     //     if(error){
@@ -102,7 +102,7 @@ MongoClient.connect(connectionURL, {
     //     console.log(user);
     // })
 
-    // // It will not display anything because object id is b\not actually a string
+    // // It will not display anything because object id is not actually a string
     // db.collection('users').findOne({ _id: "6000e5407f85d213e98048db"}, (error, user) => {
     //     if(error){
     //         return console.log('Unable to fetch');
