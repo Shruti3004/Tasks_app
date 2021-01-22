@@ -25,6 +25,17 @@ const User = mongoose.model('User', {
             }
         }
     },
+    password: {
+        type: String,
+        required: true,
+        trim: true,
+        minlength: 7,
+        validate(value){
+            if(value.toLowerCase().includes("password")){
+                throw new Error('enter a valid password');
+            }
+        }
+    },
     age: {
         type: Number,
         default: 0,
@@ -37,29 +48,33 @@ const User = mongoose.model('User', {
 })
 
 // It also added the property _v that is version of the document
-const me = new User({
-    name: 'Shruti Agarwal',
-    email: ' MAIL2Shruti.ag@gmail.com ',
-})
-
-me.save()
-.then(() => console.log(me))
-.catch(error => console.log(`Error: ${error}`))
-
-// const Tasks = mongoose.model('Tasks', {
-//     description: {
-//         type: String
-//     },
-//     completed: {
-//         type: Boolean
-//     }
-// });
-
-// const task = new Tasks({
-//     description: "Clean the house",
-//     completed: true
+// const me = new User({
+//     name: 'Shruti Agarwal',
+//     email: 'mail2shruti.ag@gmail.com',
+//     password: '@123Password',
+//     age: '19'
 // })
 
-// task.save()
-// .then(() => console.log(task))
-// .catch((error) => console.log(error))
+// me.save()
+// .then(() => console.log(me))
+// .catch(error => console.log(`Error: ${error}`))
+
+const Tasks = mongoose.model('Tasks', {
+    description: {
+        type: String,
+        trim: true,
+        required: true
+    },
+    completed: {
+        type: Boolean,
+        default: false
+    }
+});
+
+const task = new Tasks({
+    description: "Clean the house",
+})
+
+task.save()
+.then(() => console.log(task))
+.catch((error) => console.log(`Error: ${error}`))
