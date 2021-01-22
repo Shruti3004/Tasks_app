@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb://127.0.0.1:27017/task-manager-api', {
     useNewUrlParser: true,
     // in mongoose worked with mongodb and allow us to create indexes which we want to create
-    useCreateIndex: true
+    useCreateIndex: true,
+    // useFindAndModify: false
 });
 
 // mongoose.model takes two arguments first the name of the collection and second the properties which we wanted to work with
