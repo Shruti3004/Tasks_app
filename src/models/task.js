@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+require('../db/mongoose')
 
 const Tasks = mongoose.model('Tasks', {
     description: {

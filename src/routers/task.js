@@ -14,10 +14,13 @@ router.post("/tasks", async (req,res) => {
     // })
 
     try{
-        await task.save();
+        console.log(task);
+        const abc = await task.save();
+        console.log(abc)
         res.status(201).send(task);
     }catch(error){
         res.status(400).send(error);
+        console.log(`Error: ${error}`)
     }
 })
 
@@ -80,7 +83,13 @@ router.patch("/tasks/:id", async (req, res) => {
         return res.status(400).send('Invalid Update');
     }
     try{
-        const task = await Tasks.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true});
+        // const task = await Tasks.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true});
+        const task = await Tasks.findById(req.params.id);
+        updates.forEach(update => {
+            task[update] = req.body[update];
+        })
+        await task.save();
+        
         if(!task){
             res.status(404).send();
         }

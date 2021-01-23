@@ -1,6 +1,9 @@
+// Middleware is a way to customize behaviour of mongoose model
+
 const express = require('express');
 const router = new express.Router();
 const User = require("../models/user");
+require('../db/mongoose')
 
 router.post('/users', async (req, res) => {
     
@@ -12,7 +15,6 @@ router.post('/users', async (req, res) => {
     //     res.status(400).send(error);
     //     // res.send(`Error: ${error}`);
     // })
-    
     try{
         await user.save();
         res.status(201).send(user);
@@ -37,6 +39,7 @@ router.get('/users', async (req,res)=> {
         res.send(users);
     }catch(error){
         res.status(500).send();
+        console.log(error)
     }
 })
 
@@ -89,13 +92,21 @@ router.patch("/users/:id", async (req, res) => {
     }
     try {
         // new will return the new/updated user
-        const user = await User.findByIdAndUpdate(_id, req.body, { new: true, runValidators: true });
+        // const user = await User.findByIdAndUpdate(_id, req.body, { new: true, runValidators: true });
+
+        const user = await User.findById(_id);
+        updates.forEach(update => {
+            user[update] = req.body[update];
+        })
+        // console.log(user)
+        await user.save();
+
         if(!user){
             res.status(404).send();
         }
         res.send(user);
     }catch(error){
-        res.status(500).send();
+        res.status(500).send(error);
     }
 })
 

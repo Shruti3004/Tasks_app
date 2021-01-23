@@ -15,12 +15,12 @@ const bcrypt = require('bcryptjs');
 const myFunction = async () => {
     const password = "Shruti@123";
     const hashedPassword = await bcrypt.hash(password, 8);
-    console.log(password);
-    console.log(hashedPassword);
+    // console.log(password);
+    // console.log(hashedPassword);
 
     // if user logins again then we will check the value of entered password to hash
     const isMatch = await bcrypt.compare('SHruti@123', hashedPassword);
-    console.log(isMatch);
+    // console.log(isMatch);
 }
 myFunction()
 
