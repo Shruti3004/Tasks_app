@@ -9,69 +9,130 @@ const port = process.env.PORT || 3000;
 // Its automatically gonna parse incoming json response to object
 app.use(express.json());
 
-app.post('/users', (req, res) => {
+app.post('/users', async (req, res) => {
+    
     const user = new User(req.body);
-    user.save()
-    .then(user => {
+    // user.save()
+    // .then(user => {
+    //     res.status(201).send(user);
+    // }).catch(error => {
+    //     res.status(400).send(error);
+    //     // res.send(`Error: ${error}`);
+    // })
+    
+    try{
+        await user.save();
         res.status(201).send(user);
-    }).catch(error => {
+    } catch (error){
         res.status(400).send(error);
-        // res.send(`Error: ${error}`);
-    })
+    }
 })
 
-app.get('/users', (req,res)=> {
+
+
+app.get('/users', async (req,res)=> {
+
     // This is gonna return all the users
-    User.find({}).then(users => {
+    // User.find({}).then(users => {
+    //     res.send(users);
+    // }).catch(error => {
+    //     res.status(500).send();
+    // })
+
+    try{
+        const users = await User.find({});
         res.send(users);
-    }).catch(error => {
+    }catch(error){
         res.status(500).send();
-    })
+    }
 })
 
-app.get('/users/:id', (req, res)=> {
+app.get('/users/:id', async (req, res)=> {
+
     console.log(req.params);
     const _id = req.params.id;
+
     // Mongoose automatically converts string id to Object id
-    User.findById(_id).then(user => {
+    // User.findById(_id).then(user => {
+    //     if(!user){
+    //         // Ye tab aayega jab hexadecimal hi id hogi lekin User mil nahi raha hai
+    //         return res.status(404).send("User NOt found");
+    //     }
+    //     res.send(user);
+    // }).catch(error => {
+    //     res.status(500).send(`Internal Server Error: ${error}`);
+    // })
+
+    try{
+        const user = await User.findById(_id);
         if(!user){
-            // Ye tab aayega jab hexadecimal hi id hogi lekin User mil nahi raha hai
             return res.status(404).send("User NOt found");
-        }
+        }           
         res.send(user);
-    }).catch(error => {
+
+    }catch(error){
         res.status(500).send(`Internal Server Error: ${error}`);
-    })
+    }
 })
 
-app.post("/tasks", (req,res) => {
+app.post("/tasks", async (req,res) => {
+
     const task = new Tasks(req.body);
-    task.save()
-    .then(task => {
+
+    // task.save()
+    // .then(task => {
+    //     res.status(201).send(task);
+    // }).catch(error => {
+    //     res.status(400).send(error);
+    // })
+
+    try{
+        await task.save();
         res.status(201).send(task);
-    }).catch(error => {
+    }catch(error){
         res.status(400).send(error);
-    })
+    }
 })
 
-app.get("/tasks", (req, res) => {
-    Tasks.find({}).then(task => {
-        res.send(task);
-    }).catch(error => {
+app.get("/tasks", async (req, res) => {
+    
+    // Tasks.find({}).then(task => {
+    //     res.send(task);
+    // }).catch(error => {
+    //     res.send(error);
+    // })
+
+    try{
+        const tasks = await Tasks.find({});
+        res.send(tasks);
+    }catch(error){
         res.send(error);
-    })
+    }
 })
 
-app.get("/tasks/:desc", (req,res) => {
-    const desc = req.params.desc;
-    Tasks.find({description: desc}).then(task => {
+app.get("/tasks/:id", async (req,res) => {
+    
+    const _id = req.params.id;
+    // const desc = req.params.desc;
+    
+    // Tasks.find({description: desc}).then(task => {
+    //     if(!task){
+    //         return res.status(400).send("task NOt Found!")
+    //     }
+    //     res.send(task);
+    // }).catch(error => {
+    //     console.log(error);
+    // })
+
+    try{
+        const task = await Tasks.find({_id});
         if(!task){
-            return res.status(400).send("task NOt Found!")
+            return res.status(400).send("Task Not Found!")
         }
         res.send(task);
-    }).catch(error => {
-        console.log(error);
-    })
+    }catch(error){
+        res.send(`Error: ${error}`)
+    }
 })
 
 app.listen(port, ()=> {
