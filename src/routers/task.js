@@ -1,6 +1,7 @@
 const express= require('express');
 const router = new express.Router();
 const Tasks = require("../models/task");
+const User = require('../models/user');
 
 router.post("/tasks", async (req,res) => {
 
@@ -89,7 +90,7 @@ router.patch("/tasks/:id", async (req, res) => {
             task[update] = req.body[update];
         })
         await task.save();
-        
+
         if(!task){
             res.status(404).send();
         }
