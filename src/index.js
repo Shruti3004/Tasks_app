@@ -47,6 +47,8 @@ app.get('/users', async (req,res)=> {
     }
 })
 
+
+
 app.get('/users/:id', async (req, res)=> {
 
     console.log(req.params);
@@ -75,6 +77,37 @@ app.get('/users/:id', async (req, res)=> {
     }
 })
 
+
+
+app.patch("/users/:id", async (req, res) => {
+
+    // it will return the array of strings
+    const updates = Object.keys(req.body);
+    // console.log(updates);
+    const allowedUpdates = ['name', 'email', 'password', 'age'];
+    const isValidOperation = updates.every((update) => {
+        return allowedUpdates.includes(update);
+    })
+
+    const _id = req.params.id;
+
+    if(!isValidOperation){
+        return res.status(400).send('Invalid Updates');
+    }
+    try {
+        // new will return the new/updated user
+        const user = await User.findByIdAndUpdate(_id, req.body, { new: true, runValidators: true });
+        if(!user){
+            res.status(404).send();
+        }
+        res.send(user);
+    }catch(error){
+        res.status(500).send();
+    }
+})
+
+
+
 app.post("/tasks", async (req,res) => {
 
     const task = new Tasks(req.body);
@@ -94,6 +127,8 @@ app.post("/tasks", async (req,res) => {
     }
 })
 
+
+
 app.get("/tasks", async (req, res) => {
     
     // Tasks.find({}).then(task => {
@@ -109,6 +144,8 @@ app.get("/tasks", async (req, res) => {
         res.send(error);
     }
 })
+
+
 
 app.get("/tasks/:id", async (req,res) => {
     
@@ -134,6 +171,8 @@ app.get("/tasks/:id", async (req,res) => {
         res.send(`Error: ${error}`)
     }
 })
+
+
 
 app.listen(port, ()=> {
     console.log(`Server is up on port ${port}`)
