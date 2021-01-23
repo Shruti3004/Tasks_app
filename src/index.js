@@ -174,6 +174,31 @@ app.get("/tasks/:id", async (req,res) => {
 
 
 
+app.patch("/tasks/:id", async (req, res) => {
+
+    const updates = Object.keys(req.body);
+    const allowedUpdates = ['description', 'completed'];
+    const isValidate = updates.every(update => {
+        return allowedUpdates.includes(update);
+    })
+
+    if(!isValidate){
+        return res.status(400).send('Invalid Update');
+    }
+    try{
+        const task = await Tasks.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true});
+        if(!task){
+            res.status(404).send();
+        }
+        res.send(task);
+    }catch(error){
+        res.status(500).send(error);
+    }
+
+})
+
+
+
 app.listen(port, ()=> {
     console.log(`Server is up on port ${port}`)
 })
