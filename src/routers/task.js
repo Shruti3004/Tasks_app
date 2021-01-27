@@ -15,9 +15,9 @@ router.post("/tasks", async (req,res) => {
     // })
 
     try{
-        console.log(task);
+        // console.log(task);
         const abc = await task.save();
-        console.log(abc)
+        // console.log(abc)
         res.status(201).send(task);
     }catch(error){
         res.status(400).send(error);

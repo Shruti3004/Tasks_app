@@ -5,6 +5,27 @@ const taskRouter = require("./routers/task");
 const app = express();
 const port = process.env.PORT || 3000;
 
+// 
+// Without Middleware: new request -> run route handler
+// 
+// With Middleware:    new request -> do something -> run route handler
+// 
+
+// app.use((req, res, next) => {
+//     // next is required to register middleware
+//     console.log(req.method, req.path);
+//     // this is to tell the express that we are doe with a function and we should move next
+//     if(req.method === 'GET'){
+//         res.send('GET requests are disabled')
+//     }else{
+//         next();
+//     }
+// })
+
+app.use((req, res, next) => {
+    res.status(503).send('SIte is under maintenance')
+})
+
 // Its automatically gonna parse incoming json response to object
 app.use(express.json());
 app.use(userRouter);
@@ -26,16 +47,15 @@ app.use(taskRouter);
 
 // https://www.base64decode.org paste the middle one we will get two things one id that we provided and the other is 'iat' that is 'issued at' it will gives us the timestamp
 
-const jwt = require('jsonwebtoken');
+// const jwt = require('jsonwebtoken');
 
-const myFunction = async () => {
-    const token = jwt.sign({ _id: 'abc123' }, 'thisismynewcourse', { expiresIn: '7 days'});
-    console.log(token);
-    const data = jwt.verify(token, 'thisismynewcourse');
-    console.log(data)
-}
-myFunction()
-
+// const myFunction = async () => {
+//     const token = jwt.sign({ _id: 'abc123' }, 'thisismynewcourse', { expiresIn: '7 days'});
+//     console.log(token);
+//     const data = jwt.verify(token, 'thisismynewcourse');
+//     console.log(data)
+// }
+// myFunction()
 
 
 
