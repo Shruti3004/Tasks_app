@@ -10,20 +10,31 @@ app.use(express.json());
 app.use(userRouter);
 app.use(taskRouter);
 
-const bcrypt = require('bcryptjs');
+// const bcrypt = require('bcryptjs');
+
+// const myFunction = async () => {
+//     const password = "Shruti@123";
+//     const hashedPassword = await bcrypt.hash(password, 8);
+//     // console.log(password);
+//     // console.log(hashedPassword);
+
+//     // if user logins again then we will check the value of entered password to hash
+//     const isMatch = await bcrypt.compare('SHruti@123', hashedPassword);
+//     // console.log(isMatch);
+// }
+// myFunction()
+
+// https://www.base64decode.org paste the middle one we will get two things one id that we provided and the other is 'iat' that is 'issued at' it will gives us the timestamp
+
+const jwt = require('jsonwebtoken');
 
 const myFunction = async () => {
-    const password = "Shruti@123";
-    const hashedPassword = await bcrypt.hash(password, 8);
-    // console.log(password);
-    // console.log(hashedPassword);
-
-    // if user logins again then we will check the value of entered password to hash
-    const isMatch = await bcrypt.compare('SHruti@123', hashedPassword);
-    // console.log(isMatch);
+    const token = jwt.sign({ _id: 'abc123' }, 'thisismynewcourse', { expiresIn: '7 days'});
+    console.log(token);
+    const data = jwt.verify(token, 'thisismynewcourse');
+    console.log(data)
 }
 myFunction()
-
 
 
 
