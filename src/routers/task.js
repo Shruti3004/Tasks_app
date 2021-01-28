@@ -1,11 +1,15 @@
 const express= require('express');
 const router = new express.Router();
 const Tasks = require("../models/task");
-const User = require('../models/user');
+const auth = require('../middleware/auth')
 
-router.post("/tasks", async (req,res) => {
+router.post("/tasks", auth, async (req,res) => {
 
-    const task = new Tasks(req.body);
+    // const task = new Tasks(req.body);
+    const task = new Tasks({
+        ...req.body,
+        owner: req.user._id
+    })
 
     // task.save()
     // .then(task => {

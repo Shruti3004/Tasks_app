@@ -68,6 +68,12 @@ userSchema.methods.generateAuthToken = async function () {
 // }
 
 
+userSchema.virtual('tasks', {
+    ref: 'Tasks',
+    localField: '_id',
+    foreignField :'owner'
+})
+
 userSchema.methods.toJSON = function () {
     const user = this;
     const userObject = user.toObject();

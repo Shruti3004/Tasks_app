@@ -80,7 +80,24 @@ app.use(taskRouter);
 // console.log(JSON.stringify(pet));
 
 
+/* ********************************************************************************************** */
+const Task = require('../src/models/task');
+const User = require('../src/models/user');
 
+const main = async () => {
+    // const task = await Task.findById('6013325af9bbe346d09965a4');
+    // // it gonna search the complete id because we have added ref that is refernce with User
+    // await task.populate('owner').execPopulate()
+    // console.log(task.owner);
+
+
+    // FINDING USER BY ID
+    const user = await User.findById('60133238f9bbe346d09965a2');
+    await user.populate('tasks').execPopulate()
+    console.log(user.tasks);
+}
+
+main()
 
 
 
