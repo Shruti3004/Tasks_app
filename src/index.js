@@ -31,6 +31,10 @@ app.use(express.json());
 app.use(userRouter);
 app.use(taskRouter);
 
+
+
+/* ********************************************************************************************** */
+
 // const bcrypt = require('bcryptjs');
 
 // const myFunction = async () => {
@@ -45,6 +49,9 @@ app.use(taskRouter);
 // }
 // myFunction()
 
+
+
+/* ********************************************************************************************** */
 // https://www.base64decode.org paste the middle one we will get two things one id that we provided and the other is 'iat' that is 'issued at' it will gives us the timestamp
 
 // const jwt = require('jsonwebtoken');
@@ -56,6 +63,22 @@ app.use(taskRouter);
 //     console.log(data)
 // }
 // myFunction()
+
+
+
+/* ********************************************************************************************** */
+const pet = {
+    name: 'Hal'
+}
+
+// when we use res.send JSON.stringify calls and when the data is converted into JSON .toJSON message is called
+pet.toJSON = function () {
+    // console.log(this)
+    // return this
+    return {}
+}
+console.log(JSON.stringify(pet));
+
 
 
 
