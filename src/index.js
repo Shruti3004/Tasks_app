@@ -22,9 +22,9 @@ const port = process.env.PORT || 3000;
 //     }
 // })
 
-app.use((req, res, next) => {
-    res.status(503).send('SIte is under maintenance')
-})
+// app.use((req, res, next) => {
+//     res.status(503).send('SIte is under maintenance')
+// })
 
 // Its automatically gonna parse incoming json response to object
 app.use(express.json());

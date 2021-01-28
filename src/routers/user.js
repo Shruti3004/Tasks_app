@@ -3,6 +3,7 @@
 const express = require('express');
 const router = new express.Router();
 const User = require("../models/user");
+const auth = require('../middleware/auth')
 require('../db/mongoose')
 
 router.post('/users', async (req, res) => {
@@ -38,7 +39,8 @@ router.post('/users/login', async (req, res)=> {
 
 
 
-router.get('/users', async (req,res)=> {
+// Second arguement should be middleware
+router.get('/users/me', auth ,async (req,res)=> {
 
     // This is gonna return all the users
     // User.find({}).then(users => {
@@ -47,13 +49,15 @@ router.get('/users', async (req,res)=> {
     //     res.status(500).send();
     // })
 
-    try{
-        const users = await User.find({});
-        res.send(users);
-    }catch(error){
-        res.status(500).send();
-        console.log(error)
-    }
+    // try{
+    //     const users = await User.find({});
+    //     res.send(users);
+    // }catch(error){
+    //     res.status(500).send();
+    //     console.log(error)
+    // }
+
+    res.send(req.user)
 })
 
 
