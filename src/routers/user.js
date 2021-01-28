@@ -39,6 +39,34 @@ router.post('/users/login', async (req, res)=> {
 
 
 
+router.post('/users/logout', auth, async (req, res) => {
+    try {
+        // console.log(req.user.tokens)
+        req.user.tokens = req.user.tokens.filter(token => {
+            // console.log(token.token, req.token);
+            return token.token !== req.token
+        })
+        // console.log(req.user.tokens);
+        await req.user.save();
+        res.send()
+    } catch(e){
+        console.log(e)
+        res.status(500).send()
+    }
+})
+
+
+
+router.post('/users/logoutAll', auth, async (req, res) => {
+    try{
+        req.user.tokens = [];
+        await req.user.save();
+        res.send()
+    }catch(e){
+        res.status(500).send()
+    }
+})
+
 // Second arguement should be middleware
 router.get('/users/me', auth ,async (req,res)=> {
 
