@@ -67,17 +67,17 @@ app.use(taskRouter);
 
 
 /* ********************************************************************************************** */
-const pet = {
-    name: 'Hal'
-}
+// const pet = {
+//     name: 'Hal'
+// }
 
-// when we use res.send JSON.stringify calls and when the data is converted into JSON .toJSON message is called
-pet.toJSON = function () {
-    // console.log(this)
-    // return this
-    return {}
-}
-console.log(JSON.stringify(pet));
+// // when we use res.send JSON.stringify calls and when the data is converted into JSON .toJSON message is called
+// pet.toJSON = function () {
+//     // console.log(this)
+//     // return this
+//     return {}
+// }
+// console.log(JSON.stringify(pet));
 
 
 
