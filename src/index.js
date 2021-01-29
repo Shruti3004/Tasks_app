@@ -102,34 +102,34 @@ app.use(taskRouter);
 
 /* ********************************************************************************************** */
 // in fileSize we have to give the limit in bytes
-const multer = require('multer');
-const upload = multer({
-    dest: 'images',
-    limits: {
-        fileSize: 1000000
-    },
-    fileFilter(req, file, cb){
-        // if(!file.originalname.endsWith('.pdf')){
-        //     return cb(new Error('File must be a PDF'));
-        // }
+// const multer = require('multer');
+// const upload = multer({
+//     dest: 'images',
+//     limits: {
+//         fileSize: 1000000
+//     },
+//     fileFilter(req, file, cb){
+//         // if(!file.originalname.endsWith('.pdf')){
+//         //     return cb(new Error('File must be a PDF'));
+//         // }
 
-        if(!file.originalname.match(/\.(doc|docx)$/)){
-            return cb(new Error('File must be a word document'));
-        }
-        cb(undefined, true);
-        // cb(new Error('File must be a PDF'));
-        // cb(undefined, true);
-        // cb(undefined, false);
-    }
-})
-// const errorMiddleware = (req, res, next) => {
-//     throw new Error('From my Middleware');
-// }
-app.post('/upload', upload.single('upload') ,(req,res) => {
-    res.send()
-}, (err, req, res, next) =>{
-    res.status(400).send({error: err.message})
-})
+//         if(!file.originalname.match(/\.(doc|docx)$/)){
+//             return cb(new Error('File must be a word document'));
+//         }
+//         cb(undefined, true);
+//         // cb(new Error('File must be a PDF'));
+//         // cb(undefined, true);
+//         // cb(undefined, false);
+//     }
+// })
+// // const errorMiddleware = (req, res, next) => {
+// //     throw new Error('From my Middleware');
+// // }
+// app.post('/upload', upload.single('upload') ,(req,res) => {
+//     res.send()
+// }, (err, req, res, next) =>{
+//     res.status(400).send({error: err.message})
+// })
 
 
 
