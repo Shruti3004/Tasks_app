@@ -35,10 +35,17 @@ router.post("/tasks", auth, async (req,res) => {
 // limit skip
 // if i skip 0 that is I am getting first ten results if i skip 10 then I skip first page and get next page 10 results 
 // GET /tasks?limit=10&skip?0
+// GET /tasks/sortBy=createdAt:asc
+// GET /tasks/sortBy=createdAt:desc
 router.get("/tasks", auth, async (req, res) => {
-    const match = {}
+    const match = {};
+    const sort = {};
     if(req.query.completed){
         match.completed = req.query.completed === 'true'
+    }
+    if(req.query.sortBy){
+        const parts = req.query.sortBy.split(':');
+        sort[parts[0]] = parts[1] === 'desc' ? -1 : 1
     }
     
     // Tasks.find({}).then(task => {
@@ -59,7 +66,8 @@ router.get("/tasks", auth, async (req, res) => {
             match,
             options : {
                 limit: parseInt(req.query.limit),
-                skip: parseInt(req.query.skip)
+                skip: parseInt(req.query.skip),
+                sort
             }
         }).execPopulate()
 
