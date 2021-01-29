@@ -32,6 +32,9 @@ router.post("/tasks", auth, async (req,res) => {
 
 
 // GET /tasks?completed=true
+// limit skip
+// if i skip 0 that is I am getting first ten results if i skip 10 then I skip first page and get next page 10 results 
+// GET /tasks?limit=10&skip?0
 router.get("/tasks", auth, async (req, res) => {
     const match = {}
     if(req.query.completed){
@@ -53,7 +56,11 @@ router.get("/tasks", auth, async (req, res) => {
             // match: {
             //     completed: true
             // }
-            match
+            match,
+            options : {
+                limit: parseInt(req.query.limit),
+                skip: parseInt(req.query.skip)
+            }
         }).execPopulate()
 
         // res.send(tasks);
