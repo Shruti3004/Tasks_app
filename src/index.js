@@ -122,8 +122,13 @@ const upload = multer({
         // cb(undefined, false);
     }
 })
-app.post('/upload', upload.single('upload'),(req,res) => {
+// const errorMiddleware = (req, res, next) => {
+//     throw new Error('From my Middleware');
+// }
+app.post('/upload', upload.single('upload') ,(req,res) => {
     res.send()
+}, (err, req, res, next) =>{
+    res.status(400).send({error: err.message})
 })
 
 
