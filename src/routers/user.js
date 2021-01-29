@@ -4,7 +4,11 @@ const express = require('express');
 const router = new express.Router();
 const User = require("../models/user");
 const auth = require('../middleware/auth')
-require('../db/mongoose')
+require('../db/mongoose');
+const multer = require('multer');
+const upload = multer({
+    dest: 'avatars'
+})
 
 router.post('/users', async (req, res) => {
     
@@ -92,6 +96,11 @@ router.get('/users/me', auth ,async (req,res)=> {
 
 
 
+router.post('/users/me/avatar', upload.single('avatar'), (req,res) => {
+    res.send();
+})
+
+
 // router.get('/users/:id', async (req, res)=> {
 
 //     console.log(req.params);
@@ -170,6 +179,8 @@ router.delete("/users/me", auth, async(req, res) => {
         res.status(500).send(e);
     }
 })
+
+
 
 
 module.exports = router
